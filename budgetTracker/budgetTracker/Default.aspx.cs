@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,12 +17,14 @@ namespace budgetTracker
         //Declaring variables
         static int i = 1;
         static int j = 1;
+        static decimal month_Balance = 0;
 
         //upon clicking save salary button the number in the text box will be stored in a label
         protected void saveSalaryButton_Click(object sender, EventArgs e)
         {
-            monthlySalaryLabel.Text = salaryInput.Text;
-            salaryInput.Text = String.Empty;
+            month_Balance = Convert.ToDecimal(salaryInput.Text);
+            monthlySalaryLabel.Text = month_Balance.ToString();
+            
         }
 
         //This function adds a new label for every expense
@@ -46,15 +48,15 @@ namespace budgetTracker
             j++;
         }
 
-        //This function updates the remianing monthly budget
+        //This function updates the remaining monthly budget
         private void updateRemainingBudget()
         {
             decimal monthlySalary;
             decimal expenseAmount;
             decimal.TryParse(monthlySalaryLabel.Text, out monthlySalary);
             decimal.TryParse(expenseAmountInput.Text, out expenseAmount);
-            decimal newMonthlySalary = (monthlySalary - expenseAmount);
-            monthlySalaryLabel.Text = "$" + newMonthlySalary.ToString() + " Left this month";
+            month_Balance = (month_Balance - expenseAmount);
+            monthlySalaryLabel.Text = "$" + month_Balance.ToString() + " Left this month";
             expenseAmountInput.Text = String.Empty;
         }
 
